@@ -27,8 +27,7 @@
                     <select class="form-control" id="fromCurrency" required>
                         <option value="USD">USD</option>
                         <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
-                        <option value="CHF">CHF</option>
+                        <option value="CAD">CAD</option>
                     </select>
                 </div>
 
@@ -37,8 +36,7 @@
                     <select class="form-control" id="toCurrency" required>
                         <option value="USD">USD</option>
                         <option value="EUR">EUR</option>
-                        <option value="GBP">GBP</option>
-                        <option value="CHF">CHF</option>
+                        <option value="CAD">CAD</option>
                     </select>
                 </div>
 
@@ -58,15 +56,16 @@
     </div>
 
     <script>
+        const apiKey = 'fca_live_5xzXI1hluDMK6cpnGS9iy5yWsoKgYxV4lpyAbbMk'; // Replace with your FreeCurrencyAPI key
         document.getElementById("exchangeForm").addEventListener("submit", async function(event) {
             event.preventDefault();
             let amount = document.getElementById("amount").value;
             let fromCurrency = document.getElementById("fromCurrency").value;
             let toCurrency = document.getElementById("toCurrency").value;
             
-            let response = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
+            let response = await fetch(`https://api.currencyapi.com/v3/latest?apikey=${apiKey}&currencies=USD,EUR,CAD`);
             let data = await response.json();
-            let rate = data.rates[toCurrency];
+            let rate = data.data[toCurrency].value / data.data[fromCurrency].value;
             let convertedAmount = (amount * rate).toFixed(2);
             
             document.getElementById("result").innerHTML = `<h4>${amount} ${fromCurrency} = ${convertedAmount} ${toCurrency}</h4>`;
