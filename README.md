@@ -1,9 +1,9 @@
 # AtelierDevOps
  
-*Entrer un montant*
+- Entrer un montant
 
-*Choisir la monnaie à convertir*
+- Choisir la monnaie à convertir
 
-*Choisir la monnaie dans laquelle on souhaite convertir* 
+- Choisir la monnaie dans laquelle on souhaite convertir
 
-*Appuyer sur le bouton de conversion de monnaie*
+- Appuyer sur le bouton de conversion de monnaie
