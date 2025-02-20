@@ -1,0 +1,19 @@
+{
+    "name": "leart-dmr2/atelier-dev-ops",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "LeartDmr2\\AtelierDevOps\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Leart Demiri",
+            "email": "leart.dmr2@eduge.ch"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "monolog/monolog": "^3.8"
+    }
+}
