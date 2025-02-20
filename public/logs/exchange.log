@@ -1,1 +1,8 @@
 [2025-02-20T12:05:52.920027+00:00] currency_exchange.INFO: Conversion: 20 USD to 19.19 EUR at rate 0.959510156 [] []
+[2025-02-20T12:17:48.151316+00:00] currency_exchange.INFO: Conversion: 20 USD to 19.19 EUR at rate 0.959510156 [] []
+[2025-02-20T12:17:48.747353+00:00] currency_exchange.INFO: Conversion: 20 USD to 19.19 EUR at rate 0.959510156 [] []
+[2025-02-20T12:17:54.595205+00:00] currency_exchange.INFO: Conversion: 10 CHF to 11.06 USD at rate 1.1058030899176 [] []
+[2025-02-20T12:18:41.424010+00:00] currency_exchange.INFO: Conversion: 1 USD to 0.96 EUR at rate 0.959510156 [] []
+[2025-02-20T12:18:42.878963+00:00] currency_exchange.INFO: Conversion: 1 USD to 0.96 EUR at rate 0.959510156 [] []
+[2025-02-20T12:18:43.850851+00:00] currency_exchange.WARNING: Rate limit exceeded by IP: ::1 [] []
+[2025-02-20T12:18:45.025837+00:00] currency_exchange.WARNING: Rate limit exceeded by IP: ::1 [] []
