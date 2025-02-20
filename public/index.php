@@ -2,6 +2,7 @@
 
 // Inclusion de l'autoload de Composer pour charger les dépendances
 require '../vendor/autoload.php';
+define("API_KEY", "fca_live_ns1BNzLhXFPsG7LPhY1pYVPHKvrnkNo8nO0un0y8");
 
 // Importation des classes nécessaires de Monolog pour la journalisation
 use Monolog\Logger;
@@ -26,7 +27,7 @@ class CurrencyConverter
     public function __construct()
     {
         // Initialisation des variables
-        $this->apiKey = 'fca_live_ns1BNzLhXFPsG7LPhY1pYVPHKvrnkNo8nO0un0y8';
+        $this->apiKey = API_KEY;
         $this->currencies = ['USD', 'EUR', 'CAD', 'CHF', 'GBP'];
         $this->maxRequests = 5;
         $this->timeFrame = 60;
