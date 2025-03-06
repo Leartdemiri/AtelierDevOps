@@ -23,7 +23,7 @@ class CurrencyConverter
     private $maxRequests;
     private $timeFrame;
     private $ip;
-    
+
     public function __construct()
     {
         // Initialisation des variables
@@ -72,8 +72,14 @@ class CurrencyConverter
     public function convertCurrency($amount, $fromCurrency, $toCurrency)
     {
         if (in_array($fromCurrency, $this->currencies) && in_array($toCurrency, $this->currencies) && is_numeric($amount) && $amount > 0) {
+
+            $startTime = microtime(true);
+
             // Construction de l'URL pour récupérer les taux de change
             $url = "https://api.freecurrencyapi.com/v1/latest?apikey=$this->apiKey&currencies=" . implode('%2C', $this->currencies);
+
+            $endTime = microtime(true);
+            $apiDuration =$endTime - $startTime;
 
             // Appel de l'API et décodage des données JSON
             $response = file_get_contents($url);
@@ -83,8 +89,8 @@ class CurrencyConverter
             if ($data && isset($data['data'][$fromCurrency]) && isset($data['data'][$toCurrency])) {
                 $rate = $data['data'][$toCurrency] / $data['data'][$fromCurrency]; // Calcul du taux de conversion
                 $convertedAmount = number_format($amount * $rate, 2); // Conversion et formatage du montant
-                $this->log->info("Conversion : $amount $fromCurrency en $convertedAmount $toCurrency avec un taux de $rate");
-                return "<h4>$amount $fromCurrency = $convertedAmount $toCurrency</h4>";
+                $this->log->info("Conversion : $amount $fromCurrency en $convertedAmount $toCurrency avec un taux de $rate | Temps de réponse API : $apiDuration s");
+                return "<h4>$amount $fromCurrency = $convertedAmount $toCurrency</h4><p><small>Temps de réponse de l'API : $apiDuration secondes</small></p>";
             } else {
                 $this->log->error("Échec de la récupération des taux de change.");
                 return "<h4>Erreur lors de la récupération des taux de change.</h4>";
@@ -94,6 +100,7 @@ class CurrencyConverter
             return "<h4>Entrée invalide.</h4>";
         }
     }
+
 
     /**
      * Retourne la liste des devises supportées
@@ -134,12 +141,14 @@ if ($converter->checkRequestLimit()) {
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Convertisseur de devises</title>
 </head>
+
 <body>
     <div class="container-sm my-5 shadow-lg p-3 mb-5 bg-white rounded">
         <div class="container-fluid">
@@ -152,13 +161,15 @@ if ($converter->checkRequestLimit()) {
                 <div class="form-group py-3">
                     <label for="fromCurrency">De</label>
                     <select class="form-control" name="fromCurrency" required>
-                        <?php foreach ($converter->getSupportedCurrencies() as $currency) echo "<option value='$currency'>$currency</option>"; ?>
+                        <?php foreach ($converter->getSupportedCurrencies() as $currency)
+                            echo "<option value='$currency'>$currency</option>"; ?>
                     </select>
                 </div>
                 <div class="form-group py-3">
                     <label for="toCurrency">Vers</label>
                     <select class="form-control" name="toCurrency" required>
-                        <?php foreach ($converter->getSupportedCurrencies() as $currency) echo "<option value='$currency'>$currency</option>"; ?>
+                        <?php foreach ($converter->getSupportedCurrencies() as $currency)
+                            echo "<option value='$currency'>$currency</option>"; ?>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Convertir</button>
@@ -167,13 +178,14 @@ if ($converter->checkRequestLimit()) {
             <div class="mt-3"> <?= $result; ?> </div>
         </div>
         <div class="container my-5">
-            <footer class="text-center text-lg-start">  
+            <footer class="text-center text-lg-start">
                 <div class="text-center p-3">
-                    © 2025 Currency Exchange - Leart Demiri - Louis Robinson-Paris - Timoléon Hede 
+                    © 2025 Currency Exchange - Leart Demiri - Louis Robinson-Paris - Timoléon Hede
                 </div>
             </footer>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
