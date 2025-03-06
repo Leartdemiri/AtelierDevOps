@@ -72,14 +72,13 @@ class CurrencyConverter
     public function convertCurrency($amount, $fromCurrency, $toCurrency)
     {
         if (in_array($fromCurrency, $this->currencies) && in_array($toCurrency, $this->currencies) && is_numeric($amount) && $amount > 0) {
-
             $startTime = microtime(true);
-
+            
             // Construction de l'URL pour récupérer les taux de change
             $url = "https://api.freecurrencyapi.com/v1/latest?apikey=$this->apiKey&currencies=" . implode('%2C', $this->currencies);
 
             $endTime = microtime(true);
-            $apiDuration =$endTime - $startTime;
+            $apiDuration = ($endTime - $startTime)*1000;
 
             // Appel de l'API et décodage des données JSON
             $response = file_get_contents($url);
@@ -89,8 +88,8 @@ class CurrencyConverter
             if ($data && isset($data['data'][$fromCurrency]) && isset($data['data'][$toCurrency])) {
                 $rate = $data['data'][$toCurrency] / $data['data'][$fromCurrency]; // Calcul du taux de conversion
                 $convertedAmount = number_format($amount * $rate, 2); // Conversion et formatage du montant
-                $this->log->info("Conversion : $amount $fromCurrency en $convertedAmount $toCurrency avec un taux de $rate | Temps de réponse API : $apiDuration s");
-                return "<h4>$amount $fromCurrency = $convertedAmount $toCurrency</h4><p><small>Temps de réponse de l'API : $apiDuration secondes</small></p>";
+                $this->log->info("Conversion : $amount $fromCurrency en $convertedAmount $toCurrency avec un taux de $rate | Temps de réponse API : $apiDuration ms");
+                return "<h4>$amount $fromCurrency = $convertedAmount $toCurrency</h4>";
             } else {
                 $this->log->error("Échec de la récupération des taux de change.");
                 return "<h4>Erreur lors de la récupération des taux de change.</h4>";
